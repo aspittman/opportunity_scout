@@ -1,0 +1,18 @@
+{% extends 'base.html' %}{% from 'macros.html' import score_badge, status_badge, health_cards with context %}
+{% block content %}
+<p class="subtitle">Better income now. Stronger professional connections for what comes next.</p>
+<div class="stats-grid">
+{% for label, value, detail in [('Discovered opportunities', stats.total, 'Stored across all sources'), ('High priority', stats.high, 'Score of 75 or higher'), ('New to review', stats.new, 'Ready for your assessment'), ('Upcoming events', stats.upcoming, 'Build your next connection'), ('Awaiting follow-up', stats.followups, 'Opportunities + due contacts'), ('Active paid work', stats.active, 'Income opportunities in progress')] %}
+<div class="stat"><span>{{ label }}</span><strong>{{ value }}</strong><small>{{ detail }}</small></div>{% endfor %}
+</div>
+<div class="split-layout">
+<section class="panel"><div class="section-heading"><h2>Recommended for you</h2><a href="/income">Explore opportunities →</a></div>
+{% for opportunity in recommendations %}
+<a class="recommendation" href="{{ url_for('opportunity_detail', identifier=opportunity.id) }}"><span class="op-icon">{{ '▦' if opportunity.kind == 'network' else '↗' }}</span><div><h3>{{ opportunity.title }}</h3><p>{{ opportunity.organization or 'Organization unknown' }} · {{ opportunity.location or 'Location unknown' }}</p><small>{{ (opportunity.score_details.reasons or ['More information needed before recommendation'])[0] }}</small></div>{{ score_badge(opportunity) }}</a>
+{% else %}<div class="empty"><span>↗</span><h3>Your next opportunity starts here</h3><p>Run research, add a lead, or import a CSV. Recommendations appear when real records are stored.</p><a class="button" href="/research">Run research</a></div>{% endfor %}
+</section>
+<section class="panel income-progress"><p class="eyebrow">INCOME REPLACEMENT</p><h2>Build beyond rideshare</h2><div class="big-number">{{ '%.0f' | format(income.progress) }}<small>%</small></div><progress value="{{ [income.progress, 100] | min }}" max="100">{{ income.progress }}%</progress><p>Projected weekly income <strong>${{ '%.2f' | format(income.projected_weekly) }}</strong></p><p>Rideshare comparison <strong>${{ '%.2f' | format(income.baseline_weekly) }}/week</strong></p><p class="fineprint">Based on {{ settings.weekly_availability }} available hours at ${{ settings.baseline_hourly }}/h. Projections require active recurring work and explicit cost assumptions. Taxes excluded.</p><a href="/earnings">View income tracker →</a></section>
+</div>
+<div class="section-heading"><h2>Research service health</h2><a href="/research">View runs →</a></div>{{ health_cards(health) }}
+<p class="fineprint">Last successful research run: {{ last_success | localtime }}. A previous success does not establish current health.</p>
+{% endblock %}

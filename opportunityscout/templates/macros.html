@@ -1,0 +1,6 @@
+{% macro score_badge(opportunity) %}<span class="score {{ 'strong' if opportunity.score >= 75 else '' }}">{{ opportunity.score | round(0) | int }}<small>/100</small></span>{% endmacro %}
+{% macro status_badge(status) %}<span class="badge {{ 'active' if status in ['New', 'Active', 'Healthy', 'Success'] else 'muted' if status in ['Expired', 'Rejected', 'Disabled', 'Stale'] else '' }}">{{ status }}</span>{% endmacro %}
+{% macro csrf() %}<input type="hidden" name="csrf_token" value="{{ csrf_token }}">{% endmacro %}
+{% macro health_cards(health) %}
+<div class="health-grid">{% for provider in health %}<div class="panel health-card"><div class="row"><h3>{{ provider.name | replace('_', ' ') | title }}</h3>{{ status_badge(provider.state) }}</div><p>Last successful execution<br><strong>{{ provider.last_success | localtime }}</strong></p>{% if provider.latest and provider.latest.errors %}<p class="error-text">{{ provider.latest.errors[:250] }}</p>{% endif %}</div>{% endfor %}</div>
+{% endmacro %}

@@ -1,0 +1,19 @@
+{
+  "baseline_hourly": 19,
+  "minimum_hourly": 25,
+  "preferred_hourly": 35,
+  "weekly_availability": 30,
+  "locations": ["Utah County", "Salt Lake County", "Provo", "Orem", "Lehi", "American Fork", "Highland", "Salt Lake City", "Sandy", "Draper", "South Jordan", "West Jordan", "Murray", "Cottonwood Heights", "South Salt Lake"],
+  "travel_radius_miles": 35,
+  "remote_preference": true,
+  "preferred_categories": ["website", "WordPress", "software", "QA", "IT support", "technical support", "Python", "automation", "data", "part-time", "event", "operations"],
+  "preferred_industries": ["technology", "small business", "entrepreneurship"],
+  "preferred_arrangements": ["contract", "freelance", "part_time", "temporary", "flexible"],
+  "income_enabled": true,
+  "network_enabled": true,
+  "income_interval_hours": 24,
+  "network_interval_hours": 24,
+  "enabled_providers": ["remotive", "utah_tech_calendar"],
+  "income_weights": {"earning": 35, "fit": 25, "flexibility": 20, "travel": 15, "career": 5},
+  "network_weights": {"earning": 20, "fit": 25, "flexibility": 10, "travel": 10, "career": 35}
+}
